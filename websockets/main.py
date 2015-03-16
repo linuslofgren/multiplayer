@@ -1,21 +1,20 @@
 __author__ = 'Linus'
 
 from flask import Flask, render_template, request, jsonify
-from datetime import date
+from players import add, players
 
 app = Flask("__name__")
 
 
 @app.route("/")
 def hello():
-    return render_template('index.html', time=date.today())
+    return render_template('index.html')
 
 
 @app.route("/calc")
 def calc():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a+b)
+    add()
+    return jsonify(result=[i.serialize() for i in players])
 
 
 if __name__ == "__main__":

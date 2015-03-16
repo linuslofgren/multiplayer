@@ -1,44 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>pageURL = {{ request.script_root|tojson|safe }}</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
     <title></title>
 </head>
 <body>
 <h1 id="h">10</h1>
 <canvas id="canvas"></canvas>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-    pageURL = {{ request.script_root|tojson|safe }}
-</script>
-<script>
-    $(function(){
-        $('a#connect').bind("click", function() {
-            var now = new Date().getTime();
-            $.getJSON(pageURL + '/calc', {
-                a: 10,
-                b: 11
-            }, function(data) {
-                $("#h").text(data.result);
-                draw();
-            });
-            return false;
-        });
-    });
-</script>
-<script>
-    var draw = function(){
+    var draw = function(result){
+        var array = result;
         var canvas = $("#canvas")[0];
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "white";
         ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.beginPath();
-        ctx.arc(50,50,$("#h").text(),0,2*Math.PI);
-        ctx.stroke();
+        for(var i = 0;i<array.length;i++){
+            ctx.beginPath();
+            ctx.arc(array[i].xPos,50,$("#h").text(),0,2*Math.PI);
+            ctx.stroke();
+        }
     }
     $(function(){
-        draw();
+        connect();
     });
 </script>
-<a href="#" id="connect">Connect to the server</a>
+<a href="#" id="connect">Add player</a>
 </body>
 </html>
