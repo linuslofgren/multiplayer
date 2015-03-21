@@ -13,9 +13,16 @@ def hello():
 
 @app.route("/calc")
 def calc():
-    add()
-    return jsonify(result=[i.serialize() for i in players])
+    if players.__len__() != 0:
+        return jsonify(result=[i.serialize() for i in players])
+    else:
+        return jsonify(result="None")
 
+
+@app.route("/add")
+def add_player():
+    add()
+    return jsonify(result=players[-1].serialize())
 
 if __name__ == "__main__":
     app.debug = True

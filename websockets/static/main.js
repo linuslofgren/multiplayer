@@ -1,10 +1,13 @@
-var connect = function() {
-    $('a#connect').bind("click", function() {
-        $.getJSON(pageURL + '/calc', {
-        }, function(data) {
-            //$("#h").text(data.result);
-            draw(data.result);
-        });
-        return false;
+var get_players = function() {
+    $.getJSON(pageURL + '/calc', {
+    }, function(data) {
+        if(data.result != "None"){
+            players = data.result;
+        }
     });
+    return false;
+}
+var add = function() {
+    $.getJSON(pageURL + '/add');
+    return false;
 }

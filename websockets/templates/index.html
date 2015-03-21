@@ -10,7 +10,9 @@
 <h1 id="h">10</h1>
 <canvas id="canvas"></canvas>
 <script>
-    var draw = function(result){
+    var players = {};
+    var a = 0;
+    var draw = function(timestamp, result){
         var array = result;
         var canvas = $("#canvas")[0];
         var ctx = canvas.getContext("2d");
@@ -21,11 +23,17 @@
             ctx.arc(array[i].xPos,50,$("#h").text(),0,2*Math.PI);
             ctx.stroke();
         }
+        a++;
+        if(a>10){get_players();a=0;}
+        window.requestAnimationFrame(function(t){draw(t, players);});
     }
+    window.requestAnimationFrame(function(t){draw(t, players);});
     $(function(){
-        connect();
+        $('a#get_players').on("click", function() {return get_players()});
+        $('a#add').on("click", function() {return add()});
     });
 </script>
-<a href="#" id="connect">Add player</a>
+<a href="#" id="get_players">Get players</a>
+<a href="#" id="add">Add player</a>
 </body>
 </html>
