@@ -11,7 +11,6 @@
 <canvas id="canvas"></canvas>
 <script>
     var players = {};
-    var a = 0;
     var draw = function(timestamp, result){
         var array = result;
         var canvas = $("#canvas")[0];
@@ -20,20 +19,17 @@
         ctx.fillRect(0,0,canvas.width,canvas.height);
         for(var i = 0;i<array.length;i++){
             ctx.beginPath();
-            ctx.arc(array[i].xPos,50,$("#h").text(),0,2*Math.PI);
+            ctx.arc(array[i].xPos,array[i].yPos,$("#h").text(),0,2*Math.PI);
             ctx.stroke();
         }
-        a++;
-        if(a>10){get_players();a=0;}
         window.requestAnimationFrame(function(t){draw(t, players);});
     }
     window.requestAnimationFrame(function(t){draw(t, players);});
+    setInterval(function(){get_players();},1000);
     $(function(){
-        $('a#get_players').on("click", function() {return get_players()});
         $('a#add').on("click", function() {return add()});
     });
 </script>
-<a href="#" id="get_players">Get players</a>
 <a href="#" id="add">Add player</a>
 </body>
 </html>
