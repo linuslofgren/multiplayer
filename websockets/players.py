@@ -6,19 +6,20 @@ players = []
 
 
 class Player(object):
-    yPos = 10
+    timer = 50
 
-    def __init__(self, name, x_pos):
+    def __init__(self, name, x_pos, y_pos):
         self.name = name
+        self.y_pos = y_pos
         self.x_pos = x_pos
 
     def serialize(self):
         return {
             'xPos': self.x_pos,
-            'yPos': self.yPos,
+            'yPos': self.y_pos,
             'name': self.name
         }
 
 
-def add():
-    players.append(Player(players.__len__(),random.uniform(10, 100)))
+def add(x, y):
+    players.append(Player(players.__len__(),x,y))

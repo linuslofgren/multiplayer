@@ -7,7 +7,19 @@ var get_players = function() {
     });
     return false;
 }
-var add = function() {
-    $.getJSON(pageURL + '/add');
+var add = function(e) {
+    $.getJSON(pageURL + '/add' + '/' + e.pageX + '/' + e.pageY);
     return false;
+}
+var isdown = false;
+var move = function(e) {
+    if(isdown){
+        add(e)
+    }
+}
+var down = function(e) {
+    isdown = true;
+}
+var up = function(e) {
+    isdown = false;
 }

@@ -20,9 +20,9 @@ def calc():
         return jsonify(result="None")
 
 
-@app.route("/add")
-def add_player():
-    add()
+@app.route("/add/<xPos>/<yPos>")
+def add_player(xPos, yPos):
+    add(xPos, yPos)
     return jsonify(result=players[-1].serialize())
 
 
@@ -37,10 +37,12 @@ def set_interval(func, sec):
 
 def move():
     for i in players:
-        i.yPos += 1
+        i.timer -= 1
+        if i.timer <= 0:
+            players.remove(i)
 
 
-set_interval(move, 10)
+set_interval(move, 0.1)
 
 if __name__ == "__main__":
     app.debug = True

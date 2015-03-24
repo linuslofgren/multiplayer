@@ -7,7 +7,6 @@
     <title></title>
 </head>
 <body>
-<h1 id="h">10</h1>
 <canvas id="canvas"></canvas>
 <script>
     var players = {};
@@ -17,19 +16,21 @@
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "white";
         ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "black";
         for(var i = 0;i<array.length;i++){
             ctx.beginPath();
-            ctx.arc(array[i].xPos,array[i].yPos,$("#h").text(),0,2*Math.PI);
-            ctx.stroke();
+            ctx.arc(array[i].xPos,array[i].yPos,10,0,2*Math.PI);
+            ctx.fill();
         }
         window.requestAnimationFrame(function(t){draw(t, players);});
     }
     window.requestAnimationFrame(function(t){draw(t, players);});
-    setInterval(function(){get_players();},1000);
+    setInterval(function(){get_players();},100);
     $(function(){
-        $('a#add').on("click", function() {return add()});
+        $('canvas#canvas').mousedown(function(e) {return down(e)});
+        $('canvas#canvas').mousemove(function(e) {return move(e)});
+        $('canvas#canvas').mouseup(function(e) {return up(e)});
     });
 </script>
-<a href="#" id="add">Add player</a>
 </body>
 </html>
