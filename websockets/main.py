@@ -20,10 +20,10 @@ def calc():
         return jsonify(result="None")
 
 
-@app.route("/add/<xPos>/<yPos>")
-def add_player(xPos, yPos):
-    add(xPos, yPos)
-    return jsonify(result=players[-1].serialize())
+@app.route("/add", methods=['POST'])
+def add_player():
+    sak = request.data
+    return sak
 
 
 def set_interval(func, sec):

@@ -1,6 +1,5 @@
 __author__ = 'Linus'
 
-import random
 
 players = []
 

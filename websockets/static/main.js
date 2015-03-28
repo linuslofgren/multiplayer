@@ -1,25 +1,53 @@
 var get_players = function() {
-    $.getJSON(pageURL + '/calc', {
-    }, function(data) {
-        if(data.result != "None"){
-            players = data.result;
+    $.ajax({
+        url: pageURL + '/calc',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function(response) {
+            window['players'] = JSON.parse(response.result);
         }
     });
     return false;
 }
-var add = function(e) {
-    $.getJSON(pageURL + '/add' + '/' + e.pageX + '/' + e.pageY);
+var makeObj = function(key1,val1,key2,val2) {
+    return {key1: val1,key2: val2};
+}
+var posObj = function(pos){
+    return {'xPos': pos.x,'yPos': pos.y};
+}
+var relPos = function(e,that) {
+    var off = that.offset();
+    return {'x': e.pageX-off.left, 'y': e.pageY-off.top}
+}
+var drawing = [];
+var add = function(e,that) {
+    drawing.push(posObj(relPos(e,that)));
     return false;
 }
 var isdown = false;
-var move = function(e) {
+var move = function(e,that) {
     if(isdown){
-        add(e)
+        add(e,that);
     }
 }
-var down = function(e) {
+var down = function(e,that) {
+    //draw()
+    add(e,that);
     isdown = true;
 }
 var up = function(e) {
     isdown = false;
+    if(drawing.length>0){
+        send(drawing);
+        drawing=[];
+    }
+}
+var send = function(data){
+    $.ajax({
+        url: pageURL + '/add',
+        data: JSON.stringify(data),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(r,s,x) {console.log("Success. Server responded with " + x.status);console.log(r);}
+    });
 }

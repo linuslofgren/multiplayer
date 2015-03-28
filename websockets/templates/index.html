@@ -1,36 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>pageURL = {{ request.script_root|tojson|safe }}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
-    <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mainStyle.css') }}"/>
+    <title>Drawing</title>
 </head>
 <body>
-<canvas id="canvas"></canvas>
-<script>
-    var players = {};
-    var draw = function(timestamp, result){
-        var array = result;
-        var canvas = $("#canvas")[0];
-        var ctx = canvas.getContext("2d");
-        ctx.fillStyle = "white";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "black";
-        for(var i = 0;i<array.length;i++){
-            ctx.beginPath();
-            ctx.arc(array[i].xPos,array[i].yPos,10,0,2*Math.PI);
-            ctx.fill();
-        }
-        window.requestAnimationFrame(function(t){draw(t, players);});
-    }
-    window.requestAnimationFrame(function(t){draw(t, players);});
-    setInterval(function(){get_players();},100);
-    $(function(){
-        $('canvas#canvas').mousedown(function(e) {return down(e)});
-        $('canvas#canvas').mousemove(function(e) {return move(e)});
-        $('canvas#canvas').mouseup(function(e) {return up(e)});
-    });
-</script>
+<div data-role="page" id="main_page">
+    <div data-role="header"><h1>Main</h1></div>
+    <div data-role="main"><canvas id="canvas"></canvas></div>
+    <div data-role="footer"></div>
+</div>
+<script src="{{ url_for('static', filename='draw.js') }}"></script>
 </body>
 </html>
