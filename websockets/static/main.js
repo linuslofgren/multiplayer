@@ -1,13 +1,16 @@
-var get_players = function() {
+var get = function() {
     $.ajax({
         url: pageURL + '/calc',
         type: 'GET',
         contentType: 'application/json',
         success: function(response) {
-            window['players'] = JSON.parse(response.result);
+            drawings = JSON.parse(response.result);
+            console.log(drawings);
+            for(var i = 0;i<drawings.length;i++){
+                console.log(drawings[i]);
+            }
         }
     });
-    return false;
 }
 var makeObj = function(key1,val1,key2,val2) {
     return {key1: val1,key2: val2};
@@ -48,6 +51,6 @@ var send = function(data){
         data: JSON.stringify(data),
         type: 'POST',
         contentType: 'application/json',
-        success: function(r,s,x) {console.log("Success. Server responded with " + x.status);console.log(r);}
+        success: function(r,s,x) {console.log("Success. Server responded with " + x.status);}
     });
 }

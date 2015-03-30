@@ -1,4 +1,4 @@
-var players = {};
+var drawings = [];
 var draw = function(result){
     var array = result;
     var canvas = $("#canvas")[0];

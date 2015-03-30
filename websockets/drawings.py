@@ -1,11 +1,10 @@
 __author__ = 'Linus'
 
 
-players = []
+drawings = []
 
 
-class Player(object):
-    timer = 50
+class Drawing(object):
 
     def __init__(self, name, x_pos, y_pos):
         self.name = name
@@ -18,7 +17,3 @@ class Player(object):
             'yPos': self.y_pos,
             'name': self.name
         }
-
-
-def add(x, y):
-    players.append(Player(players.__len__(),x,y))
